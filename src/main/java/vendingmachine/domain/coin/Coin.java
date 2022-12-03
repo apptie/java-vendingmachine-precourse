@@ -26,7 +26,7 @@ public enum Coin {
     }
 
     public static Map<Coin, Integer> initMachineBalance(int balanceAmount, CoinGenerator generator) {
-        validateBalanceAmount(balanceAmount);
+        validateMoney(balanceAmount);
         Map<Coin, Integer> balances = new EnumMap<>(Coin.class);
 
         while (balanceAmount > 0) {
@@ -37,9 +37,9 @@ public enum Coin {
         return Collections.unmodifiableMap(balances);
     }
 
-    public static void validateBalanceAmount(int money) {
+    public static void validateMoney(int money) {
         if ((money % minChargeAmount()) != 0) {
-            throw new IllegalArgumentException("자판기가 보유하고 있는 금액은 최소 동전 단위여야 합니다.");
+            throw new IllegalArgumentException("최소 동전 단위여야 합니다.");
         }
     }
 

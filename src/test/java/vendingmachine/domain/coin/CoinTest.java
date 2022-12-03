@@ -54,7 +54,7 @@ class CoinTest {
             void it_throws_exception(int invalidBalanceAmount) {
                 assertThatThrownBy(() -> Coin.initMachineBalance(invalidBalanceAmount, generator))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining("자판기가 보유하고 있는 금액은 최소 동전 단위여야 합니다.");
+                        .hasMessageContaining("최소 동전 단위여야 합니다.");
             }
         }
     }
@@ -71,7 +71,7 @@ class CoinTest {
             @ValueSource(ints = {100, 2000, 30000})
             @DisplayName("검증에 성공한다")
             void it_success_validate(int money) {
-                assertThatCode(() -> Coin.validateBalanceAmount(money)).doesNotThrowAnyException();
+                assertThatCode(() -> Coin.validateMoney(money)).doesNotThrowAnyException();
             }
         }
 
@@ -83,7 +83,7 @@ class CoinTest {
             @ValueSource(ints = {101, 203, 305, 407, 509})
             @DisplayName("IllegalArgumentException 예외가 발생한다")
             void it_throws_exception(int invalidMoney) {
-                assertThatThrownBy(() -> Coin.validateBalanceAmount(invalidMoney))
+                assertThatThrownBy(() -> Coin.validateMoney(invalidMoney))
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessageContaining("자판기가 보유하고 있는 금액은 최소 동전 단위여야 합니다.");
             }
