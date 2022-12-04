@@ -38,8 +38,11 @@ public enum Coin {
     }
 
     public static void validateMoney(int money) {
-        if ((money % minChargeAmount()) != 0) {
-            throw new IllegalArgumentException("최소 동전 단위여야 합니다.");
+        if (money <= 0) {
+            throw new IllegalArgumentException("금액은 0 이상의 값이여야 합니다.");
+        }
+        if (money % minChargeAmount() != 0) {
+            throw new IllegalArgumentException("금액은 최소 동전 단위여야 합니다.");
         }
     }
 

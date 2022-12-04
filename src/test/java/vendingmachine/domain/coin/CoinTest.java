@@ -60,8 +60,8 @@ class CoinTest {
     }
 
     @Nested
-    @DisplayName("validateBalanceAmount 메소드는")
-    class DescribeValidateCoinAmountMethodTest {
+    @DisplayName("validateMoney 메소드는")
+    class DescribeValidateMoneyMethodTest {
 
         @Nested
         @DisplayName("동전의 최소 금액 단위의 유효한 금액 money가 주어지면")
@@ -76,7 +76,7 @@ class CoinTest {
         }
 
         @Nested
-        @DisplayName("유효하지 않은 금액 money가 주어지면")
+        @DisplayName("최소 동전 단위가 아닌 유효하지 않은 금액 money가 주어지면")
         class ContextWithInvalidMoneyTest {
 
             @ParameterizedTest
@@ -85,7 +85,21 @@ class CoinTest {
             void it_throws_exception(int invalidMoney) {
                 assertThatThrownBy(() -> Coin.validateMoney(invalidMoney))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining("자판기가 보유하고 있는 금액은 최소 동전 단위여야 합니다.");
+                        .hasMessageContaining("금액은 최소 동전 단위여야 합니다.");
+            }
+        }
+
+        @Nested
+        @DisplayName("0 이하의 유효하지 않은 금액 money가 주어지면")
+        class ContextWithInvalidMoneyAmountTest {
+
+            @ParameterizedTest
+            @ValueSource(ints = {0, -100})
+            @DisplayName("IllegalArgumentException 예외가 발생한다")
+            void it_throws_exception(int invalidMoney) {
+                assertThatThrownBy(() -> Coin.validateMoney(invalidMoney))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessageContaining("금액은 0 이상의 값이여야 합니다.");
             }
         }
     }
