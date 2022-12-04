@@ -40,4 +40,8 @@ public class Balance {
 
         return customerBalance;
     }
+
+    public Map<Coin, Integer> getBalance() {
+        return balance;
+    }
 }

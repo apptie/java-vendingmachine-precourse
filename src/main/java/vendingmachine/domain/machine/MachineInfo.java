@@ -10,8 +10,8 @@ public class MachineInfo {
     private final Balance balance;
     private Products products;
 
-    public MachineInfo(int chargeAmount, CoinGenerator generator) {
-        this.balance = new Balance(chargeAmount, generator);
+    public MachineInfo(int balanceAmount, CoinGenerator generator) {
+        this.balance = new Balance(balanceAmount, generator);
     }
 
     public void registryProducts(String productInput) {
@@ -28,5 +28,9 @@ public class MachineInfo {
 
     public Map<Coin, Integer> calculateCustomerBalance(int balanceAmount) {
         return balance.calculateBalance(balanceAmount);
+    }
+
+    public Map<Coin, Integer> getBalance() {
+        return balance.getBalance();
     }
 }
