@@ -9,8 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import vendingmachine.domain.product.exception.CannotPurchaseAnyProductException;
 
 class ProductsTest {
 
@@ -110,17 +110,36 @@ class ProductsTest {
                         .hasMessageContaining("해당 상품은 구매할 수 없습니다.");
             }
         }
+    }
+
+    @Nested
+    @DisplayName("isCanPurchaseAnything 메소드는")
+    class DescribeIsCanPurchaseAnythingMethodTest {
+
+        private Products products;
+
+        @BeforeEach
+        void initProducts() {
+            this.products = new Products("[a,500,1];[b,500,1]");
+        }
 
         @Nested
-        @DisplayName("만약 유효한 구매 상품명 어떠한 상품도 구매할 수 없는 투입 금액을 전달하면")
-        class ContextWithProductNameAndInvalidMoneyTest {
+        @DisplayName("만약 투입 금액 money가 주어지면")
+        class ContextWithMoneyTest {
 
-            @Test
-            @DisplayName("CannotPurchaseAnyProductException 예외가 발생한다")
-            void it_throws_exception() {
-                assertThatThrownBy(() -> products.purchaseProduct("a", 100))
-                        .isInstanceOf(CannotPurchaseAnyProductException.class)
-                        .hasMessageContaining("어떠한 상품도 구매할 수 없습니다.");
+            @ParameterizedTest
+            @CsvSource(
+                    value = {
+                        "500:true",
+                        "400:false"
+                    },
+                    delimiter = ':'
+            )
+            @DisplayName("상품 목록에서 구매할 수 있는 상품이 있는지 여부를 반환한다")
+            void it_returns_canPurchase(int money, boolean expected) {
+                boolean actual = products.isCanPurchaseAnything(money);
+
+                assertThat(actual).isSameAs(expected);
             }
         }
     }
