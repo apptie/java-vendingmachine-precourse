@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import vendingmachine.domain.coin.Coin;
-import vendingmachine.domain.product.Products;
 import vendingmachine.helper.stub.StubCoinGenerator;
 import vendingmachine.utils.coin.CoinGenerator;
 import vendingmachine.utils.coin.RandomCoinGenerator;
@@ -41,7 +40,7 @@ class MachineInfoTest {
         }
 
         @Nested
-        @DisplayName("만약 유효하지 않은 잔금과 유효한 동전 생성 전략을 전달하면")
+        @DisplayName("만약 최소 동전 단위가 아닌 유효하지 않은 잔금과 유효한 동전 생성 전략을 전달하면")
         class ContextWithInvalidBalanceAmountAndGeneratorTest {
 
             @ParameterizedTest
@@ -53,13 +52,25 @@ class MachineInfoTest {
                         .hasMessageContaining("최소 동전 단위여야 합니다.");
             }
         }
-    }
 
-    private final MachineInfo machineInfo = new MachineInfo(10000, generator);
+        @Nested
+        @DisplayName("만약 금액이 0 이하인 유효하지 않은 잔금과 유효한 동전 생성 전략을 전달하면")
+        class ContextWithInvalidLessThanZeroBalanceAmountAndGeneratorTest {
+
+            @ParameterizedTest
+            @ValueSource(ints = {0, -100})
+            @DisplayName("IllegalArgumentException 예외가 발생한다")
+            void it_throws_exception(int invalidBalanceAmount) {
+                assertThatThrownBy(() -> new MachineInfo(invalidBalanceAmount, generator))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessageContaining("금액은 0 이상의 값이여야 합니다.");
+            }
+        }
+    }
 
     @Nested
     @DisplayName("registryProducts 메소드는")
-    class DescribeRegistryProductsMethodTest {
+    class DescribeRegistryProductsMethodTest extends DefaultMachineInfoField {
 
         @Nested
         @DisplayName("만약 유효한 등록 상품 정보를 전달하면")
@@ -213,20 +224,8 @@ class MachineInfoTest {
         }
     }
 
-    /*
+    private class DefaultMachineInfoField {
 
-    @Nested
-    @DisplayName("만약 유효한 구매 상품명 어떠한 상품도 구매할 수 없는 투입 금액을 전달하면")
-    class ContextWithProductNameAndInvalidMoneyTest {
-
-        @Test
-        @DisplayName("CannotPurchaseAnyProductException 예외가 발생한다")
-        void it_throws_exception() {
-            assertThatThrownBy(() -> products.purchaseProduct("a", 100))
-                .isInstanceOf(CannotPurchaseAnyProductException.class)
-                .hasMessageContaining("어떠한 상품도 구매할 수 없습니다.");
-        }
+        protected final MachineInfo machineInfo = new MachineInfo(10000, generator);
     }
-
-     */
 }
