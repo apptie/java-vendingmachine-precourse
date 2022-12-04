@@ -5,6 +5,7 @@ import vendingmachine.domain.coin.Coin;
 
 public class Product {
 
+    // 상수 안쓴거 변경한거임
     private static final String PRODUCT_INFO_SEPARATOR = ",";
     private static final char OPEN_BRACKET = '[';
     private static final char CLOSE_BRACKET = ']';
@@ -60,7 +61,7 @@ public class Product {
         int lastIndex = productInfo.length() - 1;
 
         validateProductInfo(productInfo, lastIndex);
-        return productInfo.substring(START_PRODUCT_INFO_INDEX, lastIndex).split(",");
+        return productInfo.substring(START_PRODUCT_INFO_INDEX, lastIndex).split(PRODUCT_INFO_SEPARATOR);
     }
 
     private void validateProductInfo(String productInfo, int lastIndex) {
