@@ -3,7 +3,6 @@ package vendingmachine.domain.product;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import vendingmachine.domain.product.exception.CannotPurchaseAnyProductException;
 
 public class Products {
 
@@ -28,10 +27,6 @@ public class Products {
     }
 
     public int purchaseProduct(String productName, int money) {
-        if (!isCanBuyAnything(money)) {
-            throw new CannotPurchaseAnyProductException();
-        }
-
         Product target = products.stream()
                 .filter(product -> product.isPurchaseProduct(productName))
                 .findAny()
@@ -40,7 +35,7 @@ public class Products {
         return target.purchaseProduct(money);
     }
 
-    private boolean isCanBuyAnything(int money) {
+    public boolean isCanPurchaseAnything(int money) {
         return products.stream().anyMatch(product -> product.isCanBuy(money));
     }
 }
