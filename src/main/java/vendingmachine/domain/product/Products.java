@@ -10,7 +10,7 @@ public class Products {
 
     private final List<Product> products;
 
-    public Products(String productsInfo) {
+    public Products(final String productsInfo) {
         String[] infos = productsInfo.split(PRODUCTS_SEPARATOR);
 
         this.products = Arrays.stream(infos)
@@ -21,13 +21,13 @@ public class Products {
         validateProductsCount(infos);
     }
 
-    private void validateProductsCount(String[] info) {
+    private void validateProductsCount(final String[] info) {
         if (info.length != products.size()) {
             throw new IllegalArgumentException(ProductsExceptionMessage.INVALID_PRODUCTS_SIZE.message);
         }
     }
 
-    public int purchaseProduct(String productName, int money) {
+    public int purchaseProduct(final String productName, final int money) {
         Product target = products.stream()
                 .filter(product -> product.isPurchaseProduct(productName))
                 .findAny()
@@ -37,7 +37,7 @@ public class Products {
         return target.purchaseProduct(money);
     }
 
-    public boolean isCanPurchaseAnything(int money) {
+    public boolean isCanPurchaseAnything(final int money) {
         return products.stream().anyMatch(product -> product.isCanBuy(money));
     }
 

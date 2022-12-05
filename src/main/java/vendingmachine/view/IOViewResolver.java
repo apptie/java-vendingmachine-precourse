@@ -19,12 +19,12 @@ public class IOViewResolver {
     private final Map<Class<?>, Consumer<Object>> outputViewMappings = new HashMap<>();
     private final Map<Class<?>, Supplier<Object>> inputViewMappings = new HashMap<>();
 
-    public IOViewResolver(InputView inputView, OutputView outputView) {
+    public IOViewResolver(final InputView inputView, final OutputView outputView) {
         initInputViewMappings(inputView);
         initOutputViewMappings(outputView);
     }
 
-    private void initInputViewMappings(InputView inputView) {
+    private void initInputViewMappings(final InputView inputView) {
         inputViewMappings.put(ReadInsertMoneyDto.class, inputView::readInsertMoney);
         inputViewMappings.put(ReadMachineBalanceDto.class, inputView::readMachineBalance);
         inputViewMappings.put(ReadProductsInfoDto.class, inputView::readProductsInfo);

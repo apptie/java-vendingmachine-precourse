@@ -12,13 +12,13 @@ public class PrintMachineBalanceDto {
 
     private final List<String> coinLog;
 
-    public PrintMachineBalanceDto(Map<Coin, Integer> balance) {
+    public PrintMachineBalanceDto(final Map<Coin, Integer> balance) {
         coinLog = Arrays.stream(Coin.values())
                 .map(coin -> mapToLog(coin.toString(), balance.getOrDefault(coin, 0)))
                 .collect(Collectors.toList());
     }
 
-    private String mapToLog(String coinAmount, int balance) {
+    private String mapToLog(final String coinAmount, final int balance) {
         return String.format(BASE_MESSAGE, coinAmount, balance);
     }
 

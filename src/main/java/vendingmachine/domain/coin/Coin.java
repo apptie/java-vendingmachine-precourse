@@ -25,7 +25,7 @@ public enum Coin {
         this.amount = amount;
     }
 
-    public static Map<Coin, Integer> initMachineBalance(int balanceAmount, CoinGenerator generator) {
+    public static Map<Coin, Integer> initMachineBalance(int balanceAmount, final CoinGenerator generator) {
         validateMoney(balanceAmount);
         Map<Coin, Integer> balances = new EnumMap<>(Coin.class);
 
@@ -37,7 +37,7 @@ public enum Coin {
         return Collections.unmodifiableMap(balances);
     }
 
-    public static void validateMoney(int money) {
+    public static void validateMoney(final int money) {
         if (money <= 0) {
             throw new IllegalArgumentException(CoinExceptionMessage.INVALID_MONEY_AMOUNT.message);
         }
@@ -46,7 +46,7 @@ public enum Coin {
         }
     }
 
-    private static Coin generateRandomChargeCoin(int chargeAmount, CoinGenerator generator) {
+    private static Coin generateRandomChargeCoin(final int chargeAmount, final CoinGenerator generator) {
         Coin randomCoin = findCoin(generator.generate(getCoinsAmount()));
 
         while (chargeAmount - randomCoin.amount < 0) {
@@ -98,7 +98,7 @@ public enum Coin {
 
         private final String message;
 
-        CoinExceptionMessage(String message) {
+        CoinExceptionMessage(final String message) {
             this.message = message;
         }
     }

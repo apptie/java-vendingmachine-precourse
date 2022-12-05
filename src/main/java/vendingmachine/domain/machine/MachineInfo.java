@@ -10,23 +10,23 @@ public class MachineInfo {
     private final Balance balance;
     private Products products;
 
-    public MachineInfo(int balanceAmount, CoinGenerator generator) {
+    public MachineInfo(final int balanceAmount, final CoinGenerator generator) {
         this.balance = new Balance(balanceAmount, generator);
     }
 
-    public void registryProducts(String productInput) {
+    public void registryProducts(final String productInput) {
         products = new Products(productInput);
     }
 
-    public int purchaseProduct(String productName, int money) {
+    public int purchaseProduct(final String productName, final int money) {
         return products.purchaseProduct(productName, money);
     }
 
-    public boolean isCanPurchaseAnything(int money) {
+    public boolean isCanPurchaseAnything(final int money) {
         return products.isCanPurchaseAnything(money);
     }
 
-    public Map<Coin, Integer> calculateCustomerBalance(int balanceAmount) {
+    public Map<Coin, Integer> calculateCustomerBalance(final int balanceAmount) {
         return balance.calculateBalance(balanceAmount);
     }
 

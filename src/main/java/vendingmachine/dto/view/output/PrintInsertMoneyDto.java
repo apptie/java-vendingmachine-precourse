@@ -4,7 +4,7 @@ public class PrintInsertMoneyDto {
 
     private final int insertMoney;
 
-    public PrintInsertMoneyDto(int insertMoney) {
+    public PrintInsertMoneyDto(final int insertMoney) {
         this.insertMoney = insertMoney;
     }
 

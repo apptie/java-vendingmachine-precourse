@@ -4,7 +4,7 @@ public class ReadMachineBalanceDto {
 
     private final int machineBalance;
 
-    public ReadMachineBalanceDto(int machineBalance) {
+    public ReadMachineBalanceDto(final int machineBalance) {
         this.machineBalance = machineBalance;
     }
 

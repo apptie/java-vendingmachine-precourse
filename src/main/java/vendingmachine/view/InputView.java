@@ -73,7 +73,7 @@ public class InputView {
 
         private final String message;
 
-        InputViewMessage(String message) {
+        InputViewMessage(final String message) {
             this.message = message;
         }
     }

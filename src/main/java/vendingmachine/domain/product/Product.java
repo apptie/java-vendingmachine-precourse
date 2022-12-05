@@ -17,7 +17,7 @@ public class Product {
     private final int price;
     private int amount;
 
-    public Product(String productInfo) {
+    public Product(final String productInfo) {
         String[] info = mapToWithoutFormat(productInfo);
 
         this.name = info[PRODUCT_NAME_INDEX];
@@ -25,7 +25,7 @@ public class Product {
         this.amount = processProductAmount(info[PRODUCT_AMOUNT_INDEX]);
     }
 
-    private int processProductPrice(String targetPrice) {
+    private int processProductPrice(final String targetPrice) {
         int productPrice = mapToNumber(targetPrice);
 
         if (productPrice <= 0) {
@@ -35,7 +35,7 @@ public class Product {
         return productPrice;
     }
 
-    private int processProductAmount(String targetAmount) {
+    private int processProductAmount(final String targetAmount) {
         int productAmount = mapToNumber(targetAmount);
 
         if (productAmount <= 0) {
@@ -44,7 +44,7 @@ public class Product {
         return productAmount;
     }
 
-    private int mapToNumber(String target) {
+    private int mapToNumber(final String target) {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
@@ -52,34 +52,34 @@ public class Product {
         }
     }
 
-    private String[] mapToWithoutFormat(String productInfo) {
+    private String[] mapToWithoutFormat(final String productInfo) {
         int lastIndex = productInfo.length() - 1;
 
         validateProductInfo(productInfo, lastIndex);
         return productInfo.substring(START_PRODUCT_INFO_INDEX, lastIndex).split(PRODUCT_INFO_SEPARATOR);
     }
 
-    private void validateProductInfo(String productInfo, int lastIndex) {
+    private void validateProductInfo(final String productInfo, final int lastIndex) {
         if (!isValidateProductInfoFormat(productInfo, lastIndex)) {
             throw new IllegalArgumentException(ProductExceptionMessage.INVALID_INFO_FORMAT.message);
         }
     }
 
-    private boolean isValidateProductInfoFormat(String productInfo, int lastIndex) {
+    private boolean isValidateProductInfoFormat(final String productInfo, final int lastIndex) {
         return productInfo.charAt(0) == OPEN_BRACKET
                 && productInfo.charAt(lastIndex) == CLOSE_BRACKET
                 && productInfo.contains(PRODUCT_INFO_SEPARATOR);
     }
 
-    public boolean isCanBuy(int money) {
+    public boolean isCanBuy(final int money) {
         return money >= price && amount > 0;
     }
 
-    public boolean isPurchaseProduct(String productName) {
+    public boolean isPurchaseProduct(final String productName) {
         return this.name.equals(productName);
     }
 
-    public int purchaseProduct(int money) {
+    public int purchaseProduct(final int money) {
         if (!isCanBuy(money)) {
             throw new IllegalArgumentException(ProductExceptionMessage.INVALID_PURCHASE_PRODUCT.message);
         }

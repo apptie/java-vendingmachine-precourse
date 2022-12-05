@@ -4,7 +4,7 @@ public class ReadPurchaseProductDto {
 
     private final String productName;
 
-    public ReadPurchaseProductDto(String productName) {
+    public ReadPurchaseProductDto(final String productName) {
         this.productName = productName;
     }
 

@@ -9,7 +9,7 @@ public class VendingMachine {
     private final MachineInfo machineInfo;
     private int money;
 
-    public VendingMachine(int balanceAmount, CoinGenerator generator) {
+    public VendingMachine(final int balanceAmount, final CoinGenerator generator) {
         this.machineInfo = new MachineInfo(balanceAmount, generator);
     }
 
@@ -17,13 +17,13 @@ public class VendingMachine {
         return machineInfo.getBalance();
     }
 
-    public void insertMoney(int money) {
+    public void insertMoney(final int money) {
         Coin.validateMoney(money);
 
         this.money = money;
     }
 
-    public void registryProducts(String productsInfo) {
+    public void registryProducts(final String productsInfo) {
         machineInfo.registryProducts(productsInfo);
     }
 
@@ -31,7 +31,7 @@ public class VendingMachine {
         return machineInfo.isCanPurchaseAnything(money);
     }
 
-    public void purchaseProduct(String productName) {
+    public void purchaseProduct(final String productName) {
         money = machineInfo.purchaseProduct(productName, money);
     }
 

@@ -25,7 +25,7 @@ public class VendingMachineController {
     private final IOViewResolver ioViewResolver;
     private VendingMachine vendingMachine;
 
-    public VendingMachineController(IOViewResolver ioViewResolver) {
+    public VendingMachineController(final IOViewResolver ioViewResolver) {
         this.ioViewResolver = ioViewResolver;
         initVendingMachineMappings();
     }
@@ -37,7 +37,7 @@ public class VendingMachineController {
         vendingMachineMappings.put(MachineStatus.PURCHASE_PRODUCT, this::purchaseProduct);
     }
 
-    public MachineStatus process(MachineStatus machineStatus) {
+    public MachineStatus process(final MachineStatus machineStatus) {
         try {
             return vendingMachineMappings.get(machineStatus).get();
         } catch (IllegalArgumentException e) {

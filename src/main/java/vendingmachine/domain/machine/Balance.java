@@ -13,12 +13,12 @@ public class Balance {
     private final Map<Coin, Integer> balance;
     private final int balanceAmount;
 
-    public Balance(int balanceAmount, CoinGenerator generator) {
+    public Balance(final int balanceAmount, final CoinGenerator generator) {
         this.balance = Coin.initMachineBalance(balanceAmount, generator);
         this.balanceAmount = balanceAmount;
     }
 
-    public Map<Coin, Integer> calculateBalance(int money) {
+    public Map<Coin, Integer> calculateBalance(final int money) {
         if (money >= balanceAmount) {
             return balance;
         }

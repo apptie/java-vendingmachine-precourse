@@ -13,14 +13,14 @@ public class PrintCustomerBalanceDto {
 
     private final List<String> customerBalanceLog;
 
-    public PrintCustomerBalanceDto(Map<Coin, Integer> balance) {
+    public PrintCustomerBalanceDto(final Map<Coin, Integer> balance) {
         customerBalanceLog = Arrays.stream(Coin.values())
                 .filter(coin -> !Objects.isNull(balance.get(coin)))
                 .map(coin -> mapToLog(coin.toString(), balance.getOrDefault(coin, 0)))
                 .collect(Collectors.toList());
     }
 
-    private String mapToLog(String coinAmount, int balance) {
+    private String mapToLog(final String coinAmount, final int balance) {
         return String.format(BASE_MESSAGE, coinAmount, balance);
     }
 

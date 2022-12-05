@@ -20,23 +20,23 @@ public class OutputView {
         return OutputViewSingletonHelper.OUTPUT_VIEW;
     }
 
-    public void printMachineBalance(PrintMachineBalanceDto dto) {
+    public void printMachineBalance(final PrintMachineBalanceDto dto) {
         print(LINE_FEED);
         print(OutputViewMessage.GUIDE_MACHINE_BALANCE.findFullMessage());
         dto.getCoinLog().forEach(this::print);
     }
 
-    public void printInsertMoney(PrintInsertMoneyDto dto) {
+    public void printInsertMoney(final PrintInsertMoneyDto dto) {
         print(LINE_FEED);
         print(OutputViewMessage.PRINT_INSERT_MONEY.findFullMessage(dto.getInsertMoney()));
     }
 
-    public void printCustomerBalance(PrintCustomerBalanceDto dto) {
+    public void printCustomerBalance(final PrintCustomerBalanceDto dto) {
         print(OutputViewMessage.GUIDE_CUSTOMER_BALANCE.findFullMessage());
         dto.getCustomerBalanceLog().forEach(this::print);
     }
 
-    public void printExceptionMessage(PrintExceptionMessageDto dto) {
+    public void printExceptionMessage(final PrintExceptionMessageDto dto) {
         print(LINE_FEED);
         print(OutputViewMessage.PRINT_EXCEPTION_MESSAGE.findFullMessage(dto.getMessage()));
     }
@@ -53,7 +53,7 @@ public class OutputView {
 
         private final String message;
 
-        OutputViewMessage(String message) {
+        OutputViewMessage(final String message) {
             this.message = message;
         }
 
