@@ -57,6 +57,20 @@ class ProductsTest {
                         .hasMessageContaining("가격은 0보다 커야 합니다.");
             }
         }
+
+        @Nested
+        @DisplayName("만약 중복된 상품 정보를 전달하면")
+        class ContextWithInvalidDuplicateProductNameTest {
+
+            @ParameterizedTest
+            @ValueSource(strings = {"[a,100,1];[a,200,1]", "[a,100,1];[b,200,1];[b,200,1]"})
+            @DisplayName("IllegalArgumentException 예외가 발생한다")
+            void it_throws_exception(String invalidProductsInfo) {
+                assertThatThrownBy(() -> new Products(invalidProductsInfo))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessageContaining("유효하지 않은 형식이거나 중복된 상품명입니다.");
+            }
+        }
     }
 
     @Nested
