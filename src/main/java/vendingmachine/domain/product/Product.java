@@ -5,7 +5,6 @@ import vendingmachine.domain.coin.Coin;
 
 public class Product {
 
-    // 상수 안쓴거 변경한거임
     private static final String PRODUCT_INFO_SEPARATOR = ",";
     private static final char OPEN_BRACKET = '[';
     private static final char CLOSE_BRACKET = ']';
@@ -22,19 +21,15 @@ public class Product {
         String[] info = mapToWithoutFormat(productInfo);
 
         this.name = info[PRODUCT_NAME_INDEX];
-        try {
-            this.price = processProductPrice(info[PRODUCT_PRICE_INDEX]);
-            this.amount = processProductAmount(info[PRODUCT_AMOUNT_INDEX]);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("수량 및 가격은 숫자여야 합니다.", e);
-        }
+        this.price = processProductPrice(info[PRODUCT_PRICE_INDEX]);
+        this.amount = processProductAmount(info[PRODUCT_AMOUNT_INDEX]);
     }
 
     private int processProductPrice(String targetPrice) {
         int productPrice = mapToNumber(targetPrice);
 
         if (productPrice <= 0) {
-            throw new IllegalArgumentException("가격은 0보다 커야 합니다.");
+            throw new IllegalArgumentException(ProductExceptionMessage.INVALID_PRICE_VALUE.message);
         }
         Coin.validateMoney(productPrice);
         return productPrice;
@@ -44,7 +39,7 @@ public class Product {
         int productAmount = mapToNumber(targetAmount);
 
         if (productAmount <= 0) {
-            throw new IllegalArgumentException("재고는 0보다 커야 합니다.");
+            throw new IllegalArgumentException(ProductExceptionMessage.INVALID_AMOUNT_VALUE.message);
         }
         return productAmount;
     }
@@ -53,7 +48,7 @@ public class Product {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("수량 및 가격은 숫자여야 합니다.", e);
+            throw new IllegalArgumentException(ProductExceptionMessage.INVALID_NUMBER_FORMAT.message, e);
         }
     }
 
@@ -66,7 +61,7 @@ public class Product {
 
     private void validateProductInfo(String productInfo, int lastIndex) {
         if (!isValidateProductInfoFormat(productInfo, lastIndex)) {
-            throw new IllegalArgumentException("유효하지 않은 형식입니다.");
+            throw new IllegalArgumentException(ProductExceptionMessage.INVALID_INFO_FORMAT.message);
         }
     }
 
@@ -86,7 +81,7 @@ public class Product {
 
     public int purchaseProduct(int money) {
         if (!isCanBuy(money)) {
-            throw new IllegalArgumentException("해당 상품은 구매할 수 없습니다.");
+            throw new IllegalArgumentException(ProductExceptionMessage.INVALID_PURCHASE_PRODUCT.message);
         }
         this.amount -= 1;
         return money - price;
@@ -107,5 +102,19 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    private enum ProductExceptionMessage {
+        INVALID_NUMBER_FORMAT("수량 및 가격은 숫자여야 합니다."),
+        INVALID_PRICE_VALUE("가격은 0보다 커야 합니다."),
+        INVALID_AMOUNT_VALUE("재고는 0보다 커야 합니다."),
+        INVALID_INFO_FORMAT("유효하지 않은 형식입니다."),
+        INVALID_PURCHASE_PRODUCT("해당 상품은 구매할 수 없습니다.");
+
+        private final String message;
+
+        ProductExceptionMessage(String message) {
+            this.message = message;
+        }
     }
 }

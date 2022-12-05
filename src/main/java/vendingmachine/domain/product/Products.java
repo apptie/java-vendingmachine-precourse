@@ -15,6 +15,7 @@ public class Products {
 
         this.products = Arrays.stream(infos)
             .map(Product::new)
+            .distinct()
             .collect(Collectors.toList());
 
         validateProductsCount(infos);
@@ -22,7 +23,7 @@ public class Products {
 
     private void validateProductsCount(String[] info) {
         if (info.length != products.size()) {
-            throw new IllegalArgumentException("유효하지 않은 형식입니다.");
+            throw new IllegalArgumentException(ProductsExceptionMessage.INVALID_PRODUCTS_SIZE.message);
         }
     }
 
@@ -30,12 +31,24 @@ public class Products {
         Product target = products.stream()
                 .filter(product -> product.isPurchaseProduct(productName))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품명입니다."));
+                .orElseThrow(() ->
+                        new IllegalArgumentException(ProductsExceptionMessage.INVALID_PRODUCT_NAME.message));
 
         return target.purchaseProduct(money);
     }
 
     public boolean isCanPurchaseAnything(int money) {
         return products.stream().anyMatch(product -> product.isCanBuy(money));
+    }
+
+    private enum ProductsExceptionMessage {
+        INVALID_PRODUCTS_SIZE("유효하지 않은 형식이거나 중복된 상품명입니다."),
+        INVALID_PRODUCT_NAME("존재하지 않는 상품명입니다.");
+
+        private final String message;
+
+        ProductsExceptionMessage(String message) {
+            this.message = message;
+        }
     }
 }

@@ -39,10 +39,10 @@ public enum Coin {
 
     public static void validateMoney(int money) {
         if (money <= 0) {
-            throw new IllegalArgumentException("금액은 0 이상의 값이여야 합니다.");
+            throw new IllegalArgumentException(CoinExceptionMessage.INVALID_MONEY_AMOUNT.message);
         }
         if (money % minChargeAmount() != 0) {
-            throw new IllegalArgumentException("금액은 최소 동전 단위여야 합니다.");
+            throw new IllegalArgumentException(CoinExceptionMessage.INVALID_MONEY_UNIT.message);
         }
     }
 
@@ -90,5 +90,16 @@ public enum Coin {
     @Override
     public String toString() {
         return AMOUNT_FORMAT.format(amount);
+    }
+
+    private enum CoinExceptionMessage {
+        INVALID_MONEY_AMOUNT("금액은 0 이상의 값이여야 합니다."),
+        INVALID_MONEY_UNIT("금액은 최소 동전 단위여야 합니다.");
+
+        private final String message;
+
+        CoinExceptionMessage(String message) {
+            this.message = message;
+        }
     }
 }
